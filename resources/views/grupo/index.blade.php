@@ -22,11 +22,7 @@
         <div class="form-group">
           <label for="grupo_" >Grupo General</label>
           {!! Form::text('grupo', null, ['class'=>'form-control', 'placeholder'=>'Grupo', 'id'=>'grupo_', 'required']) !!}
-        </div>
-        <div class="form-group">
-          <label for="grupo_" >Grupo General</label>
-          {!! Form::text('grupo', null, ['class'=>'form-control', 'placeholder'=>'Grupo', 'id'=>'grupo_', 'required']) !!}
-        </div>
+        </div>        
         {!! Form::hidden('id_usuario', '1') !!}
         {!! Form::submit('A&ntilde;adir', ['class'=>'agregar btn btn-primary']) !!}
         {!! Form::close() !!}

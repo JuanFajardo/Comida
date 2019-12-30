@@ -84,6 +84,80 @@
 @endsection
 
 
+
+@section('modal3')
+<div id="modalIngredientes" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content panel panel-primary">
+
+      <div class="modal-header panel-heading">
+        <b><a href="#" class="btn btn-success" onclick="agregar()"> <li class="fa fa-plus"></li> </a></b>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="modal-body panel-body">
+        {!! Form::open(['accept-charset'=>'UTF-8', 'enctype'=>'multipart/form-data', 'method'=>'POST', 'files'=>true, 'autocomplete'=>'off', 'id'=>'form-insert'] ) !!}
+        <br>
+        <div class="row">
+          <div class="col-md-4">
+            {!! Form::text('textoMenu', null, ['class'=>'form-control',  'id'=>'textoMenu', 'readonly']) !!}
+          </div>
+          <div class="col-md-4">
+            {!! Form::select('textoGrupo', \App\Grupo::pluck('grupo', 'id'), null, ['class'=>'form-control',  'id'=>'textoGrupo', 'readonly']) !!}
+          </div>
+          <div class="col-md-4">
+            {!! Form::select('textoTiempo', \App\Tiempo::pluck('tiempo', 'id'), null, ['class'=>'form-control',  'id'=>'textoTiempo', 'readonly']) !!}
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-3">
+            <label for=""> <b>Ingrediente</b> </label>
+          </div>
+          <div class="col-md-3">
+            <label for=""> <b>Cantidad/Persona</b> </label>
+          </div>
+          <div class="col-md-3">
+            <label for=""> <b>Cantidad/Ingrediente</b> </label>
+          </div>
+          <div class="col-md-3">
+            <label for=""> <b>Unidad</b> </label>
+          </div>
+        </div>
+
+        {!! Form::hidden('id_menu', null, ['id'=>'id_menu_', 'required']) !!}
+        <div class="row">
+          <div class="col-md-3">
+            {!! Form::text('ingrediente', null, ['class'=>'form-control', 'placeholder'=>'Ingrediente', 'id'=>'ingrediente_', 'required']) !!}
+          </div>
+          <div class="col-md-3">
+            {!! Form::text('cantidad_personas', null, ['class'=>'form-control', 'placeholder'=>'Cantidad/Personas', 'id'=>'cantidad_personas_', 'required']) !!}
+          </div>
+          <div class="col-md-3">
+            {!! Form::text('cantidad_ingrediente', null, ['class'=>'form-control', 'placeholder'=>'Cantidad/Ingrediente', 'id'=>'cantidad_ingrediente_', 'required']) !!}
+          </div>
+          <div class="col-md-3">
+            {!! Form::text('unidad', null, ['class'=>'form-control', 'placeholder'=>'Unidad', 'id'=>'unidad_', 'list'=>'lista-unidad', 'required']) !!}
+            <datalist id="lista-unidad">
+              <option value="Kg.">
+              <option value="Gr.">
+              <option value="Litro">
+            </datalist>
+          </div>
+        </div>
+        <br><br>
+        <div class="row" id="ingredientesCuerpo">
+        </div>
+        <br><br>
+        {!! Form::close() !!}
+      </div>
+
+    </div>
+  </div>
+</div>
+@endsection
+
+
 @section('cuerpo')
 <div class="row">
   <div class="col-md-12">
@@ -109,7 +183,7 @@
               <td>{{$dato->grupo}}</td>
               <td>{{$dato->tiempo}}</td>
               <td>
-                <a href="#modalModifiar"  data-toggle="modal" data-target="" class="actualizar" style="color: #2c75a5;"> <li class="fa fa-folder-open"></li></a>
+                <a href="#modalIngredientes"  data-toggle="modal" data-target="" class="ingredientes" style="color: #109813;"> <li class="fa fa-folder-open"></li></a>
                 <a href="#modalModifiar"  data-toggle="modal" data-target="" class="actualizar" style="color: #B8823B;"> <li class="fa fa-edit"></li></a>
                 <a href="#"  data-toggle="modal" data-target="" style="color: #ff0000;" class="eliminar"> <li class="fa fa-trash"></li></a>
               </td>
@@ -127,6 +201,56 @@
 
 @section('js')
 <script type="text/javascript">
+  function agregar(){
+      var id_menu             = $('#id_menu_').val();
+      var ingrediente       = $('#ingrediente_').val();
+      var cantidad_personas = $('#cantidad_personas_').val();
+      var cantidad_ingrediente = $('#cantidad_ingrediente_').val();
+      var unidad            = $('#unidad_').val();
+      var link = '{{asset("index.php/Insertar/Menu")}}/'+id_menu+"/"+ingrediente+"/"+cantidad_personas+"/"+cantidad_ingrediente+"/"+unidad;
+      $.get(link, function(data, textStatus) {
+      });
+
+      link = '{{asset("/index.php/Ver/Menu/")}}/'+id_menu;
+      $('#ingredientesCuerpo').empty();
+      $.getJSON(link, function(data, textStatus) {
+        if(data.length > 0){
+          var html = "";
+          $.each(data, function(index, el) {
+            html = html +"<div class='col-md-3'> <a href='#' onclick='eliminar("+el.id+", "+id_menu+")' style='color:red;'> <i class='fa fa-fw fa-trash'></i> </a> "+el.ingrediente+"</div>"+
+                         "<div class='col-md-3'>"+el.cantidad_personas+"</div>"+
+                         "<div class='col-md-3'>"+el.cantidad_ingrediente+"</div>"+
+                         "<div class='col-md-3'>"+el.unidad+" </div>";
+          });
+          $('#ingredientesCuerpo').html(html);
+        }
+      });
+      $('#ingrediente_').val('');
+      $('#cantidad_personas_').val('');
+      $('#cantidad_ingrediente_').val('');
+      $('#unidad_').val('');
+  }
+
+  function eliminar(id, id_menu){
+    var link = '{{asset("index.php/Eliminar/Menu")}}/'+id;
+    $.get(link, function(data, textStatus) {
+    });
+
+    link = '{{asset("/index.php/Ver/Menu/")}}/'+id_menu;
+    $('#ingredientesCuerpo').empty();
+    $.getJSON(link, function(data, textStatus) {
+      if(data.length > 0){
+        var html = "";
+        $.each(data, function(index, el) {
+          html = html +"<div class='col-md-3'> <a href='#' onclick='eliminar("+el.id+", "+id_menu+")' style='color:red;'> <i class='fa fa-fw fa-trash'></i> </a> "+el.ingrediente+"</div>"+
+                       "<div class='col-md-3'>"+el.cantidad_personas+"</div>"+
+                       "<div class='col-md-3'>"+el.cantidad_ingrediente+"</div>"+
+                       "<div class='col-md-3'>"+el.unidad+" </div>";
+        });
+        $('#ingredientesCuerpo').html(html);
+      }
+    });
+  }
 
   $(document).ready(function(){
     $('#tablaAgenda').DataTable({
@@ -178,6 +302,41 @@
         });
       }
     });
+  });
+
+  $('.ingredientes').click(function(event){
+    event.preventDefault();
+    var fila = $(this).parents('tr');
+    var id = fila.data('id');
+    link  = '{{ asset("/index.php/Menu/")}}/'+id;
+
+    $.getJSON(link, function(data, textStatus) {
+      if(data.length > 0){
+        $.each(data, function(index, el) {
+          $('#id_menu_').val(el.id);
+          $('#textoMenu').val(el.menu);
+          $('#textoGrupo').val(el.id_grupo);
+          $('#textoTiempo').val(el.id_tiempo);
+        });
+      }
+    });
+
+
+    link = '{{asset("/index.php/Ver/Menu/")}}/'+id;
+    $('#ingredientesCuerpo').empty();
+    $.getJSON(link, function(data, textStatus) {
+      if(data.length > 0){
+        var html = "";
+        $.each(data, function(index, el) {
+          html = html +"<div class='col-md-3'> <a href='#' onclick='eliminar("+el.id+", "+id+")' style='color:red;'> <i class='fa fa-fw fa-trash'></i> </a> "+el.ingrediente+"</div>"+
+                       "<div class='col-md-3'>"+el.cantidad_personas+"</div>"+
+                       "<div class='col-md-3'>"+el.cantidad_ingrediente+"</div>"+
+                       "<div class='col-md-3'>"+el.unidad+" </div>";
+        });
+        $('#ingredientesCuerpo').html(html);
+      }
+    });
+
   });
 
   $('.actualizar').click(function(event){

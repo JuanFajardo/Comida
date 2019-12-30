@@ -27,4 +27,8 @@ Route::resource('Grupo',   'GrupoController');
 Route::resource('Ingrediente', 'IngredienteController');
 Route::resource('Menu',  'MenuController');
 Route::get('menu/Grupo/{id}',  'MenuController@grupo');
+Route::get('Insertar/Menu/{id_menu}/{ingrediente}/{cantidad_personas}/{cantidad_ingrediente}/{unidad}', 'MenuController@insertarMenu');
+Route::get('Ver/Menu/{id}', 'MenuController@verMenu');
+Route::get('Eliminar/Menu/{id}', 'MenuController@eliminarMenu');
+
 Route::resource('Tiempo', 'TiempoController');

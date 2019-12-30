@@ -58,4 +58,27 @@ class MenuController extends Controller
     return $datos;
   }
 
+
+  public function insertarMenu($id_menu, $ingrediente, $cantidad_personas, $cantidad_ingrediente, $unidad){
+    $dato = new \App\Ingrediente;
+    $dato->ingrediente      = $ingrediente;
+    $dato->cantidad_personas= $cantidad_personas;
+    $dato->cantidad_ingrediente=$cantidad_ingrediente;
+    $dato->unidad           = $unidad;
+    $dato->id_menu          = $id_menu;
+    $dato->save();
+  }
+
+  public function verMenu($id){
+    return \DB::table('ingredientes')->where('id_menu', '=', $id)->get();
+  }
+
+  public function eliminarMenu($id){
+
+    $dato = \App\Ingrediente::find( $id );
+    //return $dato;
+    $dato->delete();
+
+  }
+
 }
