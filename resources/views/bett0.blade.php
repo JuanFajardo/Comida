@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title> Tesoreria 1.0 - @yield('titulo') </title>
+  <title> Bett0 - @yield('titulo') </title>
 
   <link rel="stylesheet" href="{{ URL::asset('asset/bootstrap/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('asset/DataTables/datatables.min.css') }}">
@@ -20,40 +20,12 @@
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="index.html"> Tesoreria </a>
+    <a class="navbar-brand" href="{{asset('/')}}"> Tesoreria </a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-
-
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables" @yield('vigencia')>
-          <a class="nav-link" href="{{asset('/index.php/Vigencia')}}">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Vigencia</span>
-          </a>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables" @yield('empleado')>
-          <a class="nav-link" href="{{asset('/index.php/Empleado')}}">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Empleados</span>
-          </a>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables" @yield('empresa')>
-          <a class="nav-link" href="{{asset('/index.php/Empresa')}}">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Empresas</span>
-          </a>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables" @yield('boleta')>
-          <a class="nav-link" href="{{asset('/index.php/Boleta')}}">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text">Boleta</span>
-          </a>
-        </li>
-      </ul>
-
+      @include('menu')
       <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">
           <a class="nav-link text-center" id="sidenavToggler">
@@ -62,7 +34,6 @@
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-fw fa-bell"></i>
@@ -122,55 +93,19 @@
   <div class="content-wrapper">
     <div class="container-fluid">
       <!-- Breadcrumbs-->
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="#">Tesoreria</a>
-        </li>
-        <li class="breadcrumb-item active">@yield('direccion')</li>
-      </ol>
-      <!-- Icon Cards-->
       <div class="row">
-        <div class="col-xl-3 col-sm-6 mb-3">
-          <div class="card text-white bg-primary o-hidden h-100">
-            <div class="card-body">
-              <div class="card-body-icon">
-                <i class="fa fa-fw fa-user"></i>
-              </div>
-              <div class="mr-5"> <a href="{{asset('/index.php/Empleado')}}" style="color:white;">Empleados</a></div>
-            </div>
-
-          </div>
+        <div class="col-md-11">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="#">Ade </a>
+            </li>
+            <li class="breadcrumb-item active">@yield('direccion')</li>
+          </ol>
         </div>
-        <div class="col-xl-3 col-sm-6 mb-3">
-          <div class="card text-white bg-warning o-hidden h-100">
-            <div class="card-body">
-              <div class="card-body-icon">
-                <i class="fa fa-fw fa-home"></i>
-              </div>
-              <div class="mr-5"> <a href="{{asset('/index.php/Empresa')}}" style="color:white;">Empresas</a></div>
-            </div>
-          </div>
+        <div class="col-md-1">
+          <a href="#modalAgregar"   data-toggle="modal" data-target="" class="btn btn-primary"> <li class="fa fa-plus"></li> </a>
         </div>
-        <div class="col-xl-3 col-sm-6 mb-3">
-          <div class="card text-white bg-success o-hidden h-100">
-            <div class="card-body">
-              <div class="card-body-icon">
-                <i class="fa fa-fw fa-edit"></i>
-              </div>
-              <div class="mr-5"> <a href="{{asset('/index.php/Vigencia')}}" style="color:white;">Boleta de Garantia</a></div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 mb-3">
-          <div class="card text-white bg-danger o-hidden h-100">
-            <div class="card-body">
-              <div class="card-body-icon">
-                <i class="fa fa-fw fa-book"></i>
-              </div>
-              <div class="mr-5"> <a href="{{asset('/index.php/Boleta')}}" style="color:white;">Tipo de Boletas</a></div>
-            </div>
-          </div>
-        </div>
+      </div>
 
         <div class="col-xl-12 col-sm-12">
           <div class="panel text-black ">

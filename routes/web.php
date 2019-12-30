@@ -1,7 +1,7 @@
 <?php
 
 Route::get('/', function () {
-    return view('gamp');
+    return view('bett0');
 });
 Route::get('/home',function () {
     return view('home');
@@ -23,9 +23,8 @@ Route::patch('usuarios/{id}', 'UsuarioController@update');
 Route::get('usuarios/info/ver', 'UsuarioController@profile');
 Route::post('usuarios/info/ver', 'UsuarioController@profileActulizar');
 
-Route::resource('Boleta',   'BoletaController');
-Route::resource('Empleado', 'EmpleadoController');
-Route::resource('Empresa',  'EmpresaController');
-Route::resource('Vigencia', 'VigenciaController');
-Route::get('Vigencia/comando/llamar/{id}', 'VigenciaController@llamar');
-Route::get('Vigencia/comando/baja/{id}', 'VigenciaController@baja');
+Route::resource('Grupo',   'GrupoController');
+Route::resource('Ingrediente', 'IngredienteController');
+Route::resource('Menu',  'MenuController');
+Route::get('menu/Grupo/{id}',  'MenuController@grupo');
+Route::resource('Tiempo', 'TiempoController');

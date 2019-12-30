@@ -15,6 +15,8 @@ class CreateTiemposTable extends Migration
     {
         Schema::create('tiempos', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('tiempo');
+            $table->integer('id_grupo');
             $table->timestamps();
         });
     }
