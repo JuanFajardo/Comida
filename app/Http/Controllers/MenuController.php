@@ -70,6 +70,8 @@ class MenuController extends Controller
   }
 
   public function verMenu($id){
+    return $id;
+    
     return \DB::table('ingredientes')->where('id_menu', '=', $id)->get();
   }
 
